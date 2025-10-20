@@ -1,0 +1,23 @@
+#
+# This container is for running ml-simplefold on AMD ROCm with Pytorch
+#
+FROM rocm/pytorch:latest
+
+# Set working directory to /root
+WORKDIR /root
+
+# Copy the current directory contents to /root/ml-simplefold
+COPY . /root
+
+# Install jupyter
+RUN pip install jupyter
+
+# Install ml-simplefold
+RUN pip install -e .
+
+# Set executable permissions to required scripts
+RUN chmod +x /root/scripts/start_jupyter.sh
+
+# Set default user to root and PYTHONPATH
+ENV PYTHONPATH=/root
+WORKDIR /root
